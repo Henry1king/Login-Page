@@ -1,0 +1,106 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    /* Replace with your own professional background image */
+    background:url("../images/background.png") no-repeat center center/cover;
+}
+
+.login-container{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+.login-box{
+    width:400px;
+    padding:40px;
+
+    /* Transparent (Glass) Effect */
+    background:rgba(255,255,255,0.12);
+    backdrop-filter:blur(15px);
+    -webkit-backdrop-filter:blur(15px);
+
+    border:1px solid rgba(255,255,255,0.3);
+    border-radius:18px;
+    box-shadow:0 8px 32px rgba(0,0,0,.35);
+
+    color:#fff;
+}
+
+.login-box h2{
+    text-align:center;
+    margin-bottom:10px;
+    font-size:30px;
+}
+
+.login-box p{
+    text-align:center;
+    margin-bottom:30px;
+    color:#eee;
+}
+
+.login-box input{
+    width:100%;
+    padding:15px;
+    margin-bottom:18px;
+
+    border:1px solid rgba(255,255,255,.4);
+    border-radius:10px;
+
+    background:rgba(255,255,255,.15);
+    color:#fff;
+    font-size:15px;
+}
+
+.login-box input::placeholder{
+    color:#ddd;
+}
+
+.login-box input:focus{
+    outline:none;
+    border-color:#fff;
+}
+
+button{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:10px;
+    background:#1d4ed8;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{
+    background:#2563eb;
+}
+
+.links{
+    display:flex;
+    justify-content:space-between;
+    margin-top:20px;
+}
+
+.links a{
+    color:#fff;
+    text-decoration:none;
+    font-size:14px;
+}
+
+.links a:hover{
+    text-decoration:underline;
+}
