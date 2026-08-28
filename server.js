@@ -1,7 +1,7 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
-const server = http.createServer((req, res) => {
+const handler = (req, res) => {
     console.log(`User requested the URL: ${req.url} using method: ${req.method}`);
     res.setHeader('Content-Type', 'text/html');
     let targetFile = "";
@@ -55,11 +55,15 @@ const server = http.createServer((req, res) => {
             res.end(data, 'utf8');
         }
 })
-})
-server.listen(8081, () => {
-    console.log('Server is alive and listening on http://localhost:8081');
-})
+};
 
+const server = http.createServer(handler);
+
+// server.listen(8081, () => {
+//     console.log('Server is alive and listening on http://localhost:8081');
+// });
+
+module.exports = handler;
 
 
 
