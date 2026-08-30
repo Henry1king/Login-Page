@@ -1,4 +1,4 @@
-{
+
 {
   "rewrites": [
     {
@@ -8,5 +8,6 @@
     {
       "source": "/Sign_In",
       "destination": "/Project/Sign_In/index.html"
+    }
   ]
 }
