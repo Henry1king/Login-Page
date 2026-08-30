@@ -14,7 +14,7 @@ const handler = (req, res) => {
 
     // Sign In page
     else if (req.url === '/about') {
-        targetFile = '/Project/Sign_In/index.html';
+        targetFile = '/Project/Sign_In/';
     }
 
     // Other files such as CSS, images, etc.
