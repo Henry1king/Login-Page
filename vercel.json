@@ -1,8 +1,25 @@
 {
+{
   "rewrites": [
     {
-      "source": "/(.*)",
-      "destination": "/api"
+      "source": "/",
+      "destination": "/Project/Sign_Up/index.html"
+    },
+    {
+      "source": "/Sign_In",
+      "destination": "/Project/Sign_In/index.html"
+    },
+    {
+      "source": "/Sign_In/",
+      "destination": "/Project/Sign_In/index.html"
+    },
+    {
+      "source": "/Sign_Up",
+      "destination": "/Project/Sign_Up/index.html"
+    },
+    {
+      "source": "/Sign_Up/",
+      "destination": "/Project/Sign_Up/index.html"
     }
   ]
 }
