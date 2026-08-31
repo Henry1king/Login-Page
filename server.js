@@ -9,7 +9,7 @@ const handler = (req, res) => {
 
     // Home page
     if (req.url === '/') {
-        targetFile = '/Project/Sign_Up/index.html';
+        targetFile = 'Sign_Up/index.html';
     }
 
     // Sign In page
