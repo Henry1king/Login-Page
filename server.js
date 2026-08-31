@@ -9,12 +9,12 @@ const handler = (req, res) => {
 
     // Home page
     if (req.url === '/') {
-        targetFile = 'Sign_Up/index.html';
+        targetFile = '/Project/Sign_Up/index.html';
     }
 
     // Sign In page
-    else if (req.url === '/about') {
-        targetFile = '/Project/Sign_In/';
+    else if (req.url === '/about' || req.url === '/Sign_In') {
+        targetFile = '/Project/Sign_In/index.html';
     }
 
     // Other files such as CSS, images, etc.
