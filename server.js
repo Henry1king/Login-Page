@@ -47,6 +47,8 @@ const handler = (req, res) => {
         contentType = 'image/jpeg';
     }
 
+        res.end(data);
+
 };
 
 module.exports = handler;
