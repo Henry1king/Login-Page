@@ -47,6 +47,32 @@ const handler = (req, res) => {
         contentType = 'image/jpeg';
     }
 
+     fs.readFile(filePath, (err, data) => {
+
+        if (err) {
+            console.error(err);
+
+            if (err.codent-Type': 'text/html'
+                });
+
+                res.end('<h1>404 - File Not Found</h1>');
+            }
+            else {
+                res.writeHead(500);
+                res.end === 'ENOENT') {
+                res.writeHead(404, {
+                    'Conte('Server Error');
+            }
+
+            return;
+        }
+
+        res.writeHead(200, {
+            'Content-Type': contentType
+        });
+
+        res.end(data);
+
 
 };
 
