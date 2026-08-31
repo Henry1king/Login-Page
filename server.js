@@ -1,79 +1,106 @@
-const http = require('http');
-const fs = require('fs');
-const path = require('path');
+const http = require("http");
+const fs = require("fs");
+const path = require("path");
 
-const handler = (req, res) => {
-    console.log(`User requested the URL: ${req.url} using method: ${req.method}`);
+const PORT = process.env.PORT || 3000;
 
-    let targetFile;
+const server = http.createServer((req, res) => {
+    console.log(`Request: ${req.method} ${req.url}`);
 
-    // Home page
-    if (req.url === '/') {
-        targetFile = 'Sign_Up/index.html';
+    let requestPath = req.url.split("?")[0];
+
+    // Remove trailing slash except for /
+    if (requestPath.length > 1 && requestPath.endsWith("/")) {
+        requestPath = requestPath.slice(0, -1);
     }
 
-    // Sign In page
-    else if (req.url === '/about' || req.url === '/Sign_In') {
-        targetFile = 'Sign_In/index.html';
+    // Routes
+    if (requestPath === "/") {
+        requestPath = "/Project/Sign_Up/index.html";
+    } 
+    else if (
+        requestPath.toLowerCase() === "/sign_in" ||
+        requestPath.toLowerCase() === "/signin"
+    ) {
+        requestPath = "/Project/Sign_In/index.html";
+    } 
+    else if (
+        requestPath.toLowerCase() === "/sign_up" ||
+        requestPath.toLowerCase() === "/signup"
+    ) {
+        requestPath = "/Project/Sign_Up/index.html";
     }
-
-    // Other files such as CSS, images, etc.
     else {
-        targetFile = req.url;
+        // Files such as:
+        // /Project/Sign_In/style.css
+        // /Project/images/background.png
+        // etc.
+        requestPath = requestPath;
     }
 
-    const filePath = path.join(__dirname, 'Project', targetFile);
+    const filePath = path.join(__dirname, requestPath);
 
-    const extname = path.extname(filePath);
-
-    let contentType = 'text/html';
-
-    if (extname === '.css') {
-        contentType = 'text/css';
-    }
-    else if (extname === '.js') {
-        contentType = 'text/javascript';
-    }
-    else if (extname === '.json') {
-        contentType = 'application/json';
-    }
-    else if (extname === '.png') {
-        contentType = 'image/png';
-    }
-    else if (extname === '.jpg') {
-        contentType = 'image/jpeg';
-    }
-    else if (extname === '.jpeg') {
-        contentType = 'image/jpeg';
+    // Security: prevent accessing files outside the project
+    if (!filePath.startsWith(__dirname)) {
+        res.writeHead(403, {
+            "Content-Type": "text/plain"
+        });
+        res.end("403 - Forbidden");
+        return;
     }
 
-    fs.readFile(filePath, (err, data) => {
+    fs.readFile(filePath, (error, data) => {
 
-        if (err) {
-            console.error(err);
+        if (error) {
+            console.log("File not found:", filePath);
 
-            if (err.code === 'ENOENT') {
-                res.writeHead(404, {
-                    'Content-Type': 'text/html'
-                });
+            res.writeHead(404, {
+                "Content-Type": "text/html"
+            });
 
-                res.end('<h1>404 - File Not Found</h1>');
-            }
-            else {
-                res.writeHead(500);
-                res.end('Server Error');
-            }
+            res.end(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>404 - File Not Found</title>
+                </head>
+                <body>
+                    <h1>404 - File Not Found</h1>
+                    <p>The page you requested could not be found.</p>
+                </body>
+                </html>
+            `);
 
             return;
         }
 
+        const extension = path.extname(filePath).toLowerCase();
+
+        const contentTypes = {
+            ".html": "text/html",
+            ".css": "text/css",
+            ".js": "application/javascript",
+            ".json": "application/json",
+            ".png": "image/png",
+            ".jpg": "image/jpeg",
+            ".jpeg": "image/jpeg",
+            ".gif": "image/gif",
+            ".svg": "image/svg+xml",
+            ".ico": "image/x-icon",
+            ".webp": "image/webp"
+        };
+
+        const contentType =
+            contentTypes[extension] || "application/octet-stream";
+
         res.writeHead(200, {
-            'Content-Type': contentType
+            "Content-Type": contentType
         });
 
         res.end(data);
+    });
+});
 
-
-};
-
-module.exports = handler;
+server.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
