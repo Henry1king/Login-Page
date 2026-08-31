@@ -52,7 +52,7 @@ const handler = (req, res) => {
         if (err) {
             console.error(err);
 
-            if (err.codent-Type': 'text/html'
+            if (err.codent-Type: 'text/html'
                 });
 
                 res.end('<h1>404 - File Not Found</h1>');
