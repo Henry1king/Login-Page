@@ -1,9 +1,9 @@
 {
   "rewrites": [
-    { "source": "/", "destination": "/Project/Sign_Up/index.html" },
-    { "source": "/signup", "destination": "/Project/Sign_Up/index.html" },
-    { "source": "/sign_in", "destination": "/Project/Sign_In/index.html" },
-    { "source": "/signin", "destination": "/Project/Sign_In/index.html" },
-    { "source": "/login", "destination": "/Project/Sign_In/index.html" }
+    { "source": "/", "destination": "/Sign_Up/index.html" },
+    { "source": "/signup", "destination": "/Sign_Up/index.html" },
+    { "source": "/sign_in", "destination": "/Sign_In/index.html" },
+    { "source": "/signin", "destination": "/Sign_In/index.html" },
+    { "source": "/login", "destination": "/Sign_In/index.html" }
   ]
 }
