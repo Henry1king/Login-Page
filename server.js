@@ -16,7 +16,7 @@ const handler = (req, res) => {
     }
 
     // Sign In page — matches BOTH /signin and /login just in case
-    else if (urlPath === '/signin' || urlPath === '/login') {
+    else if (urlPath === '/signin' || urlPath === '/login' || urlPath === '/sign_in') {
         targetFile = 'Sign_In/index.html';
     }
 
