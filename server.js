@@ -2,11 +2,43 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
+// Recursively list files under a directory (for debugging deployment issues)
+function listFilesRecursive(dir, base = dir) {
+    let results = [];
+    let entries;
+    try {
+        entries = fs.readdirSync(dir, { withFileTypes: true });
+    } catch (e) {
+        return [`ERROR reading ${dir}: ${e.message}`];
+    }
+    for (const entry of entries) {
+        const fullPath = path.join(dir, entry.name);
+        const relPath = path.relative(base, fullPath);
+        if (entry.isDirectory()) {
+            results.push(relPath + '/');
+            results = results.concat(listFilesRecursive(fullPath, base));
+        } else {
+            results.push(relPath);
+        }
+    }
+    return results;
+}
+
 const handler = (req, res) => {
     console.log(`User requested the URL: ${req.url} using method: ${req.method}`);
 
-    // Strip query string (e.g. /signin?ref=home) before matching routes
     const urlPath = req.url.split('?')[0];
+
+    // TEMPORARY DEBUG ROUTE — visit /debug to see what files actually exist
+    if (urlPath === '/debug') {
+        const info = {
+            __dirname: __dirname,
+            filesUnderDirname: listFilesRecursive(__dirname),
+        };
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify(info, null, 2));
+        return;
+    }
 
     let targetFile;
 
@@ -15,7 +47,7 @@ const handler = (req, res) => {
         targetFile = 'Sign_Up/index.html';
     }
 
-    // Sign In page — matches BOTH /signin and /login just in case
+    // Sign In page — matches /sign_in, /signin, and /login
     else if (urlPath === '/signin' || urlPath === '/login' || urlPath === '/sign_in') {
         targetFile = 'Sign_In/index.html';
     }
