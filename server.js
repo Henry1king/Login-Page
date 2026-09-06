@@ -1,6 +1,7 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
+const { URL } = require('url');
 
 // Recursively list files under a directory (for debugging deployment issues)
 function listFilesRecursive(dir, base = dir) {
@@ -25,14 +26,21 @@ function listFilesRecursive(dir, base = dir) {
 }
 
 const handler = (req, res) => {
-    console.log(`User requested the URL: ${req.url} using method: ${req.method}`);
+    // Vercel's rewrite sends every request to /api?path=<original path>
+    // so we recover the REAL path the user actually requested from the query string.
+    const parsedUrl = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
+    const realPath = parsedUrl.searchParams.get('path') || parsedUrl.pathname;
 
-    const urlPath = req.url.split('?')[0];
+    console.log(`User requested the URL: ${realPath} using method: ${req.method}`);
+
+    const urlPath = realPath.split('?')[0];
 
     // TEMPORARY DEBUG ROUTE — visit /debug to see what files actually exist
     if (urlPath === '/debug') {
         const info = {
             __dirname: __dirname,
+            rawReqUrl: req.url,
+            resolvedRealPath: realPath,
             filesUnderDirname: listFilesRecursive(__dirname),
         };
         res.writeHead(200, { 'Content-Type': 'application/json' });
