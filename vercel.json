@@ -1,16 +1,13 @@
 {
+  "functions": {
+    "api/index.js": {
+      "includeFiles": "Project/**"
+    }
+  },
   "rewrites": [
     {
-      "source": "/",
-      "destination": "/Project/Sign_Up/index.html"
-    },
-    {
-      "source": "/Sign_In",
-      "destination": "/Project/Sign_In/index.html"
-    },
-    {
-      "source": "/Sign_In/",
-      "destination": "/Project/Sign_In/index.html"
+      "source": "/(.*)",
+      "destination": "/api"
     }
   ]
 }
