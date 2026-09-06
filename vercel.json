@@ -1,13 +1,9 @@
 {
-  "functions": {
-    "api/index.js": {
-      "includeFiles": "Project/**/*"
-    }
-  },
   "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/api?path=/$1"
-    }
+    { "source": "/", "destination": "/Project/Sign_Up/index.html" },
+    { "source": "/signup", "destination": "/Project/Sign_Up/index.html" },
+    { "source": "/sign_in", "destination": "/Project/Sign_In/index.html" },
+    { "source": "/signin", "destination": "/Project/Sign_In/index.html" },
+    { "source": "/login", "destination": "/Project/Sign_In/index.html" }
   ]
 }
