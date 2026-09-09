@@ -5,6 +5,7 @@
     { "source": "/signup", "destination": "/Sign_Up/index.html" },
     { "source": "/sign_in", "destination": "/Sign_In/index.html" },
     { "source": "/signin", "destination": "/Sign_In/index.html" },
-    { "source": "/login", "destination": "/Sign_In/index.html" }
+    { "source": "/login", "destination": "/Sign_In/index.html" },
+    { "source": "/community", "destination": "/Community/community.html" }
   ]
 }
