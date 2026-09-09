@@ -76,7 +76,7 @@
 localStorage.setItem('skyhub_loggedIn', 'true');
 localStorage.setItem('skyhub_name', data.name || '');
 
-window.location.href = '/Community/community.html?name=' + encodeURIComponent(data.name || '');
+window.location.href = '/Welcome/skyhub.html?name=' + encodeURIComponent(data.name || '')
     } catch (err) {
       showError('Network error — please check your connection and try again.');
     } finally {
