@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skyhub Community</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+
+            background: url("https://images.unsplash.com/photo-1583759311999-c8821f61e5b0?q=80&w=2620&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 560px;
+            padding: 48px 40px;
+
+            background: rgba(255, 255, 255, .12);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+
+            border: 1px solid rgba(255, 255, 255, .25);
+            border-radius: 18px;
+
+            box-shadow: 0 8px 30px rgba(0, 0, 0, .35);
+            color: white;
+            text-align: center;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 16px;
+            margin-bottom: 20px;
+
+            background: rgba(255, 255, 255, .15);
+            border: 1px solid rgba(255, 255, 255, .3);
+            border-radius: 999px;
+
+            font-size: 13px;
+            letter-spacing: .5px;
+            text-transform: uppercase;
+            color: #cfe0ff;
+        }
+
+        h1 {
+            font-size: 32px;
+            line-height: 1.3;
+            margin-bottom: 12px;
+        }
+
+        h1 span {
+            color: #6ea8ff;
+        }
+
+        .subtitle {
+            color: #e5e5e5;
+            font-size: 16px;
+            margin-bottom: 32px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 28px;
+            margin-bottom: 36px;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            min-width: 110px;
+        }
+
+        .stat strong {
+            display: block;
+            font-size: 22px;
+        }
+
+        .stat span {
+            font-size: 13px;
+            color: #d8d8d8;
+        }
+
+        .logout-btn {
+            width: 100%;
+            padding: 15px;
+
+            border: none;
+            border-radius: 10px;
+
+            background: #e63946;
+            color: white;
+
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+
+            transition: .3s;
+        }
+
+        .logout-btn:hover {
+            background: #c9303c;
+        }
+
+        .logout-btn:disabled {
+            opacity: .7;
+            cursor: default;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <span class="badge">Skyhub Community</span>
+    <h1 id="greeting">Welcome to <span>Skyhub Community</span>!</h1>
+    <p class="subtitle">You're signed in. Glad to have you here.</p>
+
+    <div class="stats">
+        <div class="stat">
+            <strong>185+</strong>
+            <span>Members</span>
+        </div>
+        <div class="stat">
+            <strong>24/7</strong>
+            <span>Active</span>
+        </div>
+        <div class="stat">
+            <strong>1</strong>
+            <span>That's you</span>
+        </div>
+    </div>
+
+    <button id="logoutBtn" class="logout-btn">Log Out</button>
+</div>
+
+<script>
+    const greeting = document.getElementById('greeting');
+    const logoutBtn = document.getElementById('logoutBtn');
+
+    // Prefer the name passed in the URL right after login; fall back to
+    // whatever was saved locally at login time.
+    const params = new URLSearchParams(window.location.search);
+    const nameFromUrl = params.get('name');
+    const nameFromStorage = localStorage.getItem('skyhub_name');
+    const name = (nameFromUrl || nameFromStorage || '').trim();
+
+    // Basic guard: if there's no logged-in flag and no name at all,
+    // this page was opened directly rather than reached via login.
+    const isLoggedIn = localStorage.getItem('skyhub_loggedIn') === 'true';
+    if (!isLoggedIn && !name) {
+        window.location.href = '/sign_in';
+    } else {
+        greeting.textContent = name
+            ? `${name}, welcome to Skyhub Community!`
+            : 'Welcome to Skyhub Community!';
+
+        // Keep localStorage in sync in case only the URL had the name.
+        if (name) {
+            localStorage.setItem('skyhub_name', name);
+        }
+        localStorage.setItem('skyhub_loggedIn', 'true');
+    }
+
+    logoutBtn.addEventListener('click', function () {
+        logoutBtn.disabled = true;
+        logoutBtn.textContent = 'Logging out...';
+
+        localStorage.removeItem('skyhub_loggedIn');
+        localStorage.removeItem('skyhub_name');
+
+        window.location.href = '/sign_in';
+    });
+</script>
+
+</body>
+</html>
