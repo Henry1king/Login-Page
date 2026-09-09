@@ -207,7 +207,8 @@ button:hover{
       return;
     }
 
-    alert('Welcome, ' + name + '!');
+    // Send the name along to the welcome page
+    window.location.href = 'welcome.html?name=' + encodeURIComponent(name);
   });
 </script>
 
