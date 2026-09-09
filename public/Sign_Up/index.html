@@ -160,11 +160,11 @@ button:hover{
             </div>
 
             <div class="input-box">
-                <input type="email" placeholder="Email Address" required>
+                <input type="email" id="email" placeholder="Email Address" required>
             </div>
 
             <div class="input-box">
-                <input type="text" placeholder="Username" required>
+                <input type="text" id="username" placeholder="Username" required>
             </div>
 
             <div class="input-box">
@@ -195,20 +195,55 @@ button:hover{
 </div>
 
 <script>
-  document.getElementById('signupForm').addEventListener('submit', function (e) {
+  const signupForm = document.getElementById('signupForm');
+  const passwordError = document.getElementById('passwordError');
+
+  function showError(message) {
+    passwordError.textContent = message;
+    passwordError.style.display = 'block';
+  }
+
+  signupForm.addEventListener('submit', async function (e) {
     e.preventDefault(); // stop page reload
+    passwordError.style.display = 'none';
 
-    const name = document.getElementById('fullName').value;
-    const pass = document.getElementById('password').value;
-    const confirmPass = document.getElementById('confirmPassword').value;
+    const fullName = document.getElementById('fullName').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
 
-    if (pass !== confirmPass) {
-      alert('Passwords do not match.');
+    if (password !== confirmPassword) {
+      showError('Passwords do not match.');
       return;
     }
 
-    // Send the name along to the welcome page
-    window.location.href = '/Welcome/welcome.html?name=' + encodeURIComponent(name);
+    const submitBtn = signupForm.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Creating account...';
+
+    try {
+      const response = await fetch('/api/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fullName, username, email, password }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        showError(data.error || 'Something went wrong. Please try again.');
+        return;
+      }
+
+      // Send the name along to the welcome page
+      window.location.href = '/Welcome/welcome.html?name=' + encodeURIComponent(data.name || fullName);
+    } catch (err) {
+      showError('Network error — please check your connection and try again.');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Create Account';
+    }
   });
 </script>
 
