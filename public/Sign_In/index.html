@@ -72,7 +72,11 @@
         return;
       }
 
-      window.location.href = '/Welcome/welcome.html?name=' + encodeURIComponent(data.name || '');
+      // Save the session locally so Community page / logout have something to work with
+localStorage.setItem('skyhub_loggedIn', 'true');
+localStorage.setItem('skyhub_name', data.name || '');
+
+window.location.href = '/Community/community.html?name=' + encodeURIComponent(data.name || '');
     } catch (err) {
       showError('Network error — please check your connection and try again.');
     } finally {
