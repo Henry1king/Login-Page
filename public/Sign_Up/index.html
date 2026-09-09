@@ -138,6 +138,14 @@ button:hover{
 .login-link a:hover{
     text-decoration:underline;
 }
+
+.error-message{
+    color:#ff6b6b;
+    font-size:14px;
+    margin-top:-10px;
+    margin-bottom:15px;
+    display:none;
+}
 </style>
 <div class="container">
     <div class="signup-box">
@@ -145,7 +153,7 @@ button:hover{
         <h2>Create Account</h2>
         <p>Join us today</p>
 
-        <form action="#">
+        <form id="signupForm" action="#">
 
             <div class="input-box">
                 <input type="text" placeholder="Full Name" required>
@@ -160,19 +168,21 @@ button:hover{
             </div>
 
             <div class="input-box">
-                <input type="password" placeholder="Password" required>
+                <input type="password" id="password" placeholder="Password" required>
             </div>
 
             <div class="input-box">
-                <input type="password" placeholder="Confirm Password" required>
+                <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
             </div>
+
+            <p id="passwordError" class="error-message">Passwords do not match.</p>
 
             <div class="checkbox">
                 <input type="checkbox" required>
                 <span>I agree to the Terms & Conditions</span>
             </div>
 
-            <button>Create Account</button>
+            <button type="submit">Create Account</button>
 
             <p class="login-link">
                 Already have an account?
@@ -183,6 +193,30 @@ button:hover{
 
     </div>
 </div>
+
+<script>
+    const signupForm = document.getElementById('signupForm');
+    const password = document.getElementById('password');
+    const confirmPassword = document.getElementById('confirmPassword');
+    const passwordError = document.getElementById('passwordError');
+
+    signupForm.addEventListener('submit', function (e) {
+        if (password.value !== confirmPassword.value) {
+            e.preventDefault();
+            passwordError.style.display = 'block';
+            confirmPassword.focus();
+        } else {
+            passwordError.style.display = 'none';
+        }
+    });
+
+    // Hide the error as soon as the user starts fixing it
+    confirmPassword.addEventListener('input', function () {
+        if (password.value === confirmPassword.value) {
+            passwordError.style.display = 'none';
+        }
+    });
+</script>
 
 </body>
 </html>
