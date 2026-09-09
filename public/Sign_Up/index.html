@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="/Sign_Up/style.css">
 </head>
 <body>
-    <style>
-        *{
+<style>
+     *{
     margin:0;
     padding:0;
     box-sizing:border-box;
@@ -21,7 +21,7 @@ body{
     justify-content:center;
     align-items:center;
 
-    background:url("../images/background.png");
+    background:url("https://images.unsplash.com/photo-1583759311999-c8821f61e5b0?q=80&w=2620&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
     background-size:cover;
     background-position:center;
 }
@@ -138,18 +138,25 @@ button:hover{
 .login-link a:hover{
     text-decoration:underline;
 }
-    </style>
 
+.error-message{
+    color:#ff0000;
+    font-size:14px;
+    margin-top:-10px;
+    margin-bottom:15px;
+    display:none;
+}
+</style>
 <div class="container">
     <div class="signup-box">
 
         <h2>Create Account</h2>
         <p>Join us today</p>
 
-        <form action="#">
+        <form id="signupForm" action="#">
 
             <div class="input-box">
-                <input type="text" placeholder="Full Name" required>
+                <input type="text" id="fullName" placeholder="Full Name" required>
             </div>
 
             <div class="input-box">
@@ -161,29 +168,48 @@ button:hover{
             </div>
 
             <div class="input-box">
-                <input type="password" placeholder="Password" required>
+                <input type="password" id="password" placeholder="Password" required>
             </div>
 
             <div class="input-box">
-                <input type="password" placeholder="Confirm Password" required>
+                <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
             </div>
+
+            <p id="passwordError" class="error-message">Passwords do not match.</p>
 
             <div class="checkbox">
                 <input type="checkbox" required>
                 <span>I agree to the Terms & Conditions</span>
             </div>
 
-            <button>Create Account</button>
+            <button type="submit">Create Account</button>
 
             <p class="login-link">
                 Already have an account?
-                <a href="../Sign_In/index.html">Login</a>
+                <a href = "/sign_in">Login</a>
             </p>
 
         </form>
 
     </div>
 </div>
+
+<script>
+  document.getElementById('signupForm').addEventListener('submit', function (e) {
+    e.preventDefault(); // stop page reload
+
+    const name = document.getElementById('fullName').value;
+    const pass = document.getElementById('password').value;
+    const confirmPass = document.getElementById('confirmPassword').value;
+
+    if (pass !== confirmPass) {
+      alert('Passwords do not match.');
+      return;
+    }
+
+    alert('Welcome, ' + name + '!');
+  });
+</script>
 
 </body>
 </html>
