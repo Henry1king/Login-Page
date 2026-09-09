@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <link rel="stylesheet" href="/Sign_Up/style.css">
+</head>
+<body>
+<style>
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+        font-family:Arial, Helvetica, sans-serif;
+    }
+
+    body{
+        height:100vh;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+
+        background:url("https://images.unsplash.com/photo-1583759311999-c8821f61e5b0?q=80&w=2620&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+        background-size:cover;
+        background-position:center;
+    }
+
+    .welcome-box{
+        width:430px;
+        padding:40px;
+        text-align:center;
+
+        background:rgba(255,255,255,.12);
+        backdrop-filter:blur(18px);
+        -webkit-backdrop-filter:blur(18px);
+
+        border:1px solid rgba(255,255,255,.25);
+        border-radius:18px;
+
+        box-shadow:0 8px 30px rgba(0,0,0,.35);
+        color:white;
+    }
+
+    .welcome-box h2{
+        font-size:32px;
+        margin-bottom:8px;
+    }
+
+    .welcome-box p{
+        color:#eee;
+    }
+
+    .welcome-box a{
+        display:inline-block;
+        margin-top:25px;
+        padding:12px 25px;
+        background:#2563eb;
+        color:white;
+        text-decoration:none;
+        border-radius:10px;
+        font-size:15px;
+    }
+
+    .welcome-box a:hover{
+        background:#1d4ed8;
+    }
+</style>
+
+<div class="welcome-box">
+    <h2 id="welcomeText">Welcome!</h2>
+    <p>Your account has been created successfully.</p>
+    <a href="/sign_in">Go to Login</a>
+</div>
+
+<script>
+    // Read the "name" value from the URL (e.g. welcome.html?name=John)
+    const params = new URLSearchParams(window.location.search);
+    const name = params.get('name');
+
+    if (name) {
+        document.getElementById('welcomeText').textContent = 'Welcome, ' + name + '!';
+    }
+</script>
+
+</body>
+</html>
